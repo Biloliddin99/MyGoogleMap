@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnStreetViewPanoramaReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -39,39 +39,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnStreetViewPanora
 //        streetViewPanoramaFragment.getStreetViewPanoramaAsync(this)
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
 
-     var marker: Marker? = null
+    var marker: Marker? = null
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 //
         // Add a marker in Sydney and move the camera
         val markhamat = LatLng(40.377947681654376, 70.45508546965759)
-       marker = mMap.addMarker(MarkerOptions().position(markhamat))
+
+        marker = mMap.addMarker(MarkerOptions().position(markhamat))
         mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+
         mMap.setOnMapClickListener {
             marker?.position = it
             // Construct a CameraPosition focusing on Mountain View and animate the camera to that position.
             val cameraPosition = CameraPosition.Builder()
                 .target(it) // Sets the center of the map to Mountain View
-                .zoom(17f)            // Sets the zoom
-                .bearing(90f)         // Sets the orientation of the camera to east
-                .tilt(45f)            // Sets the tilt of the camera to 30 degrees
+                .zoom(18f)            // Sets the zoom
+//                .bearing(90f)         // Sets the orientation of the camera to east
+                .tilt(75f)            // Sets the tilt of the camera to 30 degrees
                 .build()              // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         }
 
+        val cameraPosition = CameraPosition.Builder()
+            .target(markhamat) // Sets the center of the map to Mountain View
+            .zoom(18f)            // Sets the zoom
+//                .bearing(90f)         // Sets the orientation of the camera to east
+            .tilt(75f)            // Sets the tilt of the camera to 30 degrees
+            .build()              // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
     }
-
+    /*
     override fun onStreetViewPanoramaReady(p0: StreetViewPanorama) {
         val duration: Long = 1000
         val zoomBy = 0.5f
@@ -84,4 +84,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnStreetViewPanora
             .build()
         p0.animateTo(camera, duration)
     }
+
+     */
 }
